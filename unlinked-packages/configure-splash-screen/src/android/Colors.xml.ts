@@ -119,13 +119,16 @@ export default async function configureColorsXml(
     statusBarBackgroundColor,
   });
 
-  const configuredDarkXmlContent = ensureDesiredXmlContent(darkFileContent, {
-    backgroundColor: darkModeBackgroundColor,
-    statusBarBackgroundColor: darkModeStatusBarBackgroundColor,
-  });
+  if (darkModeBackgroundColor && darkModeStatusBarBackgroundColor) {
+    const configuredDarkXmlContent = ensureDesiredXmlContent(darkFileContent, {
+      backgroundColor: darkModeBackgroundColor,
+      statusBarBackgroundColor: darkModeStatusBarBackgroundColor,
+    });
+  
+    await writeXmlFileOrRemoveFileUponNoResources(darkFilePath, configuredDarkXmlContent, {
+      disregardComments: true,
+    });
+  }
 
-  await writeXmlFileOrRemoveFileUponNoResources(darkFilePath, configuredDarkXmlContent, {
-    disregardComments: true,
-  });
   await writeXmlFile(filePath, configuredXmlContent);
 }
