@@ -108,6 +108,18 @@ export default async function configureColorsXml(
     );
   }
 
+  if (!darkModeBackgroundColor && darkModeStatusBarBackgroundColor) {
+    throw new Error(
+      `'darkModeStatusBarBackgroundColor' is available only if 'darkModeBackgroundColor' is provided as well.`
+    );
+  }
+
+  if (darkModeBackgroundColor && !darkModeStatusBarBackgroundColor) {
+    throw new Error(
+      `'darkModeBackgroundColor' is available only if 'darkModeStatusBarBackgroundColor' is provided as well.`
+    );
+  }
+
   const filePath = path.resolve(androidMainPath, COLORS_XML_FILE_PATH);
   const darkFilePath = path.resolve(androidMainPath, COLORS_NIGHT_XML_FILE_PATH);
 
